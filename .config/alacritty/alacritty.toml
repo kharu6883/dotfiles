@@ -1,0 +1,17 @@
+[window]
+dynamic_padding = false
+opacity = 0.9
+
+[window.padding]
+x = 5
+y = 5
+
+[font]
+normal = { family =  "Hack Nerd Font Mono", style =  "Regular" }
+bold = { family = "Hack Nerd Font Mono", style = "Bold" }
+italic = { family = "Hack Nerd Font Mono", style = "Italic" }
+size = 16.0
+
+[colors]
+primary = { background = "0x191919", foreground = "0xeaeaea" }
+
