@@ -52,6 +52,8 @@ vim.keymap.set("n", "<leader>ps", function()
     builtin.grep_string({ search = vim.fn.input("Grep >") })
 end)
 
+
+
 -- lualine
 require("lualine").setup({
     options = { theme = "tokyonight" }
