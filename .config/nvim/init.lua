@@ -21,6 +21,8 @@ vim.o.shiftwidth = 4
 vim.o.number = true
 vim.o.relativenumber = true
 
+vim.o.numberwidth=5
+
 -- timeout
 vim.o.timeoutlen = 1000
 vim.o.ttimeoutlen = 5
