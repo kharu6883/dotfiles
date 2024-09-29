@@ -8,8 +8,14 @@ vim.g.mapleader = " "
 -- mapleader keymaps
 vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeOpen)
 
+-- tab keymaps
 vim.keymap.set("n", "<leader>tp", vim.cmd.tabp)
 vim.keymap.set("n", "<leader>tn", vim.cmd.tabn)
+
+-- buffer keymaps
+vim.keymap.set("n", "<leader>bp", vim.cmd.bprev)
+vim.keymap.set("n", "<leader>bn", vim.cmd.bnext)
+vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete)
 
 -- tab settings
 vim.o.tabstop = 4
@@ -26,6 +32,8 @@ vim.o.numberwidth=5
 -- timeout
 vim.o.timeoutlen = 1000
 vim.o.ttimeoutlen = 5
+
+vim.o.mouse = "";
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -70,11 +78,54 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({buffer = bufnr})
 end)
 
+local luasnip = require("luasnip")
+local cmp = require("cmp")
+
+cmp.setup({
+
+
+  mapping = {
+   ['<CR>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            if luasnip.expandable() then
+                luasnip.expand()
+            else
+                cmp.confirm({
+                    select = true,
+                })
+            end
+        else
+            fallback()
+        end
+    end),
+
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.locally_jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+  },
+})
+
 --Lua Language Server (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
 
--- colour scheme
 vim.cmd[[colorscheme tokyonight]]
 
