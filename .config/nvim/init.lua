@@ -29,6 +29,8 @@ vim.o.relativenumber = true
 
 vim.o.numberwidth=5
 
+vim.o.breakindent = true
+
 -- timeout
 vim.o.timeoutlen = 1000
 vim.o.ttimeoutlen = 5
