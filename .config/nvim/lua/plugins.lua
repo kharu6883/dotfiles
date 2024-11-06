@@ -40,7 +40,7 @@ return {
         "lervag/vimtex",
         lazy = false,     -- we don't want to lazy load VimTeX
         init = function()
-            if vim.uv.os_uname().sysname == "Linux" then
+            if vim.loop.os_uname().sysname == "Linux" then
                 vim.g.vimtex_view_method = "zathura"
             else
                 vim.g.vimtex_view_method = "sioyek"
