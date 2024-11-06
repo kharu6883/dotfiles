@@ -5,3 +5,5 @@
 !.tmux.conf
 !.gitignore
 
+.config/rstudio/
+
