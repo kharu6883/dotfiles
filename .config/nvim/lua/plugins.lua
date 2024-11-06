@@ -37,13 +37,15 @@ return {
         -- this is equalent to setup({}) function
     },
     {
-      "lervag/vimtex",
-      lazy = false,     -- we don't want to lazy load VimTeX
-      -- tag = "v2.15", -- uncomment to pin to a specific release
-      init = function()
-        -- VimTeX configuration goes here, e.g.
-        vim.g.vimtex_view_method = "zathura"
-      end
-    }
+        "lervag/vimtex",
+        lazy = false,     -- we don't want to lazy load VimTeX
+        init = function()
+            if vim.uv.os_uname().sysname == "Linux" then
+                vim.g.vimtex_view_method = "zathura"
+            else
+                vim.g.vimtex_view_method = "sioyek"
+            end
+        end
+    },
 }
 
