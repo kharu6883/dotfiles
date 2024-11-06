@@ -1,11 +1,6 @@
 return {
     {
-        "folke/tokyonight.nvim",
-        lazy = true,
-        priority = 1000,
-        config = function()
-            vim.cmd([[colorscheme tokyonight]])
-        end,
+        "ellisonleao/gruvbox.nvim", config = true, opts = ...
     },
     {
         "nvim-lualine/lualine.nvim",
@@ -26,21 +21,11 @@ return {
             require("nvim-tree").setup {}
         end,
     },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        dependencies = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {'williamboman/mason.nvim'},           -- Optional
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
-            
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},     -- Required
-            {'hrsh7th/cmp-nvim-lsp'}, -- Required
-            {'L3MON4D3/LuaSnip'},     -- Required
-        }
-    },
+    {'williamboman/mason.nvim'},
+    {'williamboman/mason-lspconfig.nvim'},
+    { "neovim/nvim-lspconfig" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/nvim-cmp" },
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
@@ -58,3 +43,4 @@ return {
       end
     }
 }
+
