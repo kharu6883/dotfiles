@@ -1,12 +1,12 @@
 -- disable netrw
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = true
+vim.g.loaded_netrwPlugin = true
+
+-- 24-bit colour
+vim.o.termguicolors = true
 
 -- space as mapleader
 vim.g.mapleader = " "
-
--- mapleader keymaps
-vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeOpen)
 
 -- tab keymaps
 vim.keymap.set("n", "<leader>tp", vim.cmd.tabp)
@@ -54,23 +54,51 @@ vim.opt.rtp:prepend(lazypath)
 -- lazy package manager
 require("lazy").setup("plugins")
 
+-- lualine
+require("lualine").setup({
+    options = { theme = "gruvbox_dark" }
+})
+
 -- telescope
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
 vim.keymap.set("n", "<C-p>", builtin.git_files, {})
 vim.keymap.set("n", "<leader>ps", function()
     builtin.grep_string({ search = vim.fn.input("Grep >") })
-end)
+    end
+)
 
--- lualine
-require("lualine").setup({
-    options = { theme = "gruvbox_dark" }
+-- oil
+require("oil").setup({
+    default_file_explorer = true,
+    columns = {
+        "icon",
+    },
+    delete_to_trash = true,
+    watch_for_changes = true,
+    keymaps = {
+        ["<C-j>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+    },
+    view_options = {
+        show_hidden = true,
+        is_hidden_file = function(name, bufnr)
+            return vim.startswith(name, ".")
+        end,
+    },
+    float = {
+        padding = 2,
+        max_width = 200,
+        max_height = 50,
+    }
 })
 
--- nvimtree
-require("nvim-tree").setup()
+-- harpoon
+require("harpoon").setup({})
 
--- LSP setup
+vim.keymap.set("n", "<leader>pv", vim.cmd.Oil)
+vim.keymap.set("n", "<leader>ph", require("oil").toggle_float)
+
+-- LSP
 --
 -- Reserve a space in the gutter
 -- This will avoid an annoying layout shift in the screen
@@ -80,9 +108,9 @@ vim.opt.signcolumn = 'yes'
 -- This should be executed before you configure any language server
 local lspconfig_defaults = require('lspconfig').util.default_config
 lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
+    'force',
+    lspconfig_defaults.capabilities,
+    require('cmp_nvim_lsp').default_capabilities()
 )
 
 -- This is where you enable features that only work
