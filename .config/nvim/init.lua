@@ -92,11 +92,19 @@ require("oil").setup({
     }
 })
 
--- harpoon
-require("harpoon").setup({})
-
 vim.keymap.set("n", "<leader>pv", vim.cmd.Oil)
 vim.keymap.set("n", "<leader>ph", require("oil").toggle_float)
+
+-- harpoon
+local harpoon = require("harpoon")
+harpoon.setup()
+
+vim.keymap.set("n", "<leader>hh", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
 
 -- LSP
 --
